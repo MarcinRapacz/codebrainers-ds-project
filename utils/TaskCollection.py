@@ -11,11 +11,31 @@ class TaskCollection:
         print("---Wykonuje zadanie 1---")
         output_file = os.path.join(self.output_dir, "task1.md")
         with open(output_file, "w", encoding="utf-8") as f:
-            print("---Task 1 executed---", file=f)
-            print("Shape:", df.shape, file=f)
-            print(df.head(10), file=f)
+            f.write("# Task 1 Report\n\n")
+            
+            # Shape
+            f.write("## Kształt danych\n")
+            f.write(f"Liczba wierszy i kolumn: {df.shape}\n\n")
+            
+            # Pierwsze 10 wierszy
+            f.write("## Pierwsze 10 wierszy\n")
+            f.write("```\n")
+            f.write(df.head(10).to_string(index=False))
+            f.write("\n```\n\n")
+            
+            # Info o kolumnach
+            f.write("## Informacje o kolumnach\n")
+            f.write("```\n")
             df.info(buf=f)
-            print("---Task 1 completed---", file=f)
+            f.write("\n```\n\n")
+            
+            # Statystyki opisowe dla kolumn numerycznych
+            f.write("## Statystyki opisowe (kolumny numeryczne)\n")
+            f.write("```\n")
+            f.write(df.describe().to_string())
+            f.write("\n```\n\n")
+            
+            f.write("--- Task 1 completed ---\n")
 
     def runTask2(self, df):
         print("---Wykonuje zadanie 2---")
