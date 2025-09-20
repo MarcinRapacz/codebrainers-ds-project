@@ -1,6 +1,7 @@
 import os
 import matplotlib.pyplot as plt
 import seaborn as sns
+import pandas as pd
 
 class TaskCollection:
     def __init__(self, output_dir="out"):
@@ -13,51 +14,55 @@ class TaskCollection:
         with open(output_file, "w", encoding="utf-8") as f:
             f.write("# Task 1 Report\n\n")
             
-            # Shape
             f.write("## Kształt danych\n")
             f.write(f"Liczba wierszy i kolumn: {df.shape}\n\n")
             
-            # Pierwsze 10 wierszy
             f.write("## Pierwsze 10 wierszy\n")
             f.write("```\n")
             f.write(df.head(10).to_string(index=False))
             f.write("\n```\n\n")
             
-            # Info o kolumnach
             f.write("## Informacje o kolumnach\n")
             f.write("```\n")
             df.info(buf=f)
             f.write("\n```\n\n")
             
-            # Statystyki opisowe dla kolumn numerycznych
             f.write("## Statystyki opisowe (kolumny numeryczne)\n")
             f.write("```\n")
             f.write(df.describe().to_string())
             f.write("\n```\n\n")
-            
-            f.write("--- Task 1 completed ---\n")
 
     def runTask2(self, df):
         print("---Wykonuje zadanie 2---")
         output_file = os.path.join(self.output_dir, "task2.md")
         with open(output_file, "w", encoding="utf-8") as f:
-            print("---Task 2 executed---", file=f)
+            f.write("# Task 2 Report\n\n")
+            
+            f.write("## Informacje o kolumnach\n")
+            f.write("```\n")
             df.info(buf=f)
-            print("---Task 2 completed---", file=f)
+            f.write("\n```\n\n")
 
     def runTask3(self, df):
         print("---Wykonuje zadanie 3---")
         output_file = os.path.join(self.output_dir, "task3.md")
         with open(output_file, "w", encoding="utf-8") as f:
-            print("---Task 3 executed---", file=f)
-            print("Statystyki:", file=f)
-            print(df.describe(), file=f)
-            print("Danych w Vehicle Type:", file=f)
-            print(df["Vehicle Type"].value_counts(), file=f)
-            print("Teza: Wartosc transportu wplywa na Vehicle Type", file=f)
-            print(df.loc[df["Vehicle Type"].isna(), "Transport"].value_counts(), file=f)
-            print("Potwierdzenei tezy: Nan odpowiada transportowi ekologicznemu", file=f)
-            print("---Task 3 completed---", file=f)
+            f.write("# Task 3 Report\n\n")
+            
+            f.write("## Statystyki opisowe wszystkich kolumn numerycznych\n")
+            f.write("```\n")
+            f.write(df.describe().to_string())
+            f.write("\n```\n\n")
+            
+            f.write("## Wartości w kolumnie Vehicle Type\n")
+            f.write("```\n")
+            f.write(df["Vehicle Type"].value_counts().to_string())
+            f.write("\n```\n\n")
+            
+            f.write("## Teza: Wartość transportu wpływa na Vehicle Type\n")
+            f.write("```\n")
+            f.write(df.loc[df["Vehicle Type"].isna(), "Transport"].value_counts().to_string())
+            f.write("\n```\n\n")
 
     def runTask4(self, df):
         print("---Generuje wykresy do zadania 4---")

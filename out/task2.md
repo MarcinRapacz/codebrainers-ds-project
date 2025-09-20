@@ -1,4 +1,7 @@
----Task 2 executed---
+# Task 2 Report
+
+## Informacje o kolumnach
+```
 <class 'pandas.core.frame.DataFrame'>
 RangeIndex: 10000 entries, 0 to 9999
 Data columns (total 20 columns):
@@ -26,4 +29,6 @@ Data columns (total 20 columns):
  19  CarbonEmission                 10000 non-null  int64 
 dtypes: int64(7), object(13)
 memory usage: 1.5+ MB
----Task 2 completed---
+
+```
+
