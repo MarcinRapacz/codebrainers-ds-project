@@ -4,6 +4,7 @@ import seaborn as sns
 import json
 
 from utils.FeatureInspector import FeatureInspector
+from utils.FeatureProcessor import FeatureProcessor
 
 
 class TaskCollection:
@@ -109,19 +110,31 @@ class TaskCollection:
         print("---Wykonuje zadanie 6---")
         feature_inspector = FeatureInspector(df, list_cols=["Recycling", "Cooking_With"])
         output_file = os.path.join(self.output_dir, "task6.md")
+        data = feature_inspector.inspect();
 
         with open(output_file, "w", encoding="utf-8") as f:
             f.write("# Task 6 Report\n\n")
             f.write("## Rodzaje kolumn\n")
             f.write("```\n")
-            f.write(json.dumps(feature_inspector.inspect(), indent=2, ensure_ascii=False))
+            f.write(json.dumps(data, indent=2, ensure_ascii=False))
             f.write("\n```\n\n")
 
+        return data
+
+    def runTask7(self, columns):
+        print("---Wykonuje zadanie 7---")
+        feature_processor = FeatureProcessor(
+            list_cols=columns['list_cols'], 
+            num_cols=columns['num_cols'],
+            cat_cols=columns['cat_cols']
+        )
+        return feature_processor
 
     def runAllTasks(self, df):
-        self.runTask1(df)
-        self.runTask2(df)
-        self.runTask3(df)
-        self.runTask4(df)
-        self.runTask5(df)
-        self.runTask6(df)
+        # self.runTask1(df)
+        # self.runTask2(df)
+        # self.runTask3(df)
+        # self.runTask4(df)
+        # self.runTask5(df)
+        columns = self.runTask6(df)
+        feature_processor = self.runTask7(columns)
