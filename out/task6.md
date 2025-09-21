@@ -9,8 +9,7 @@
     "Waste Bag Weekly Count",
     "How Long TV PC Daily Hour",
     "How Many New Clothes Monthly",
-    "How Long Internet Daily Hour",
-    "CarbonEmission"
+    "How Long Internet Daily Hour"
   ],
   "cat_cols": [
     "Body Type",

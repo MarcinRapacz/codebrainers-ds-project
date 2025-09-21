@@ -1,8 +1,6 @@
-
 import numpy as np
 import pandas as pd
 import ast
-
 from sklearn.preprocessing import MultiLabelBinarizer
 from sklearn.base import BaseEstimator, TransformerMixin
 
@@ -25,14 +23,27 @@ class ListToMLB(BaseEstimator, TransformerMixin):
                     return []
             return []
         return []
+    
+    # def fit(self, X, y=None):
+    #     col = pd.Series(X.ravel()).apply(self._parse_cell)
+    #     self.mlb_.fit(col)
+    #     return self
+
+    # def transform(self, X):
+    #     col = pd.Series(X.ravel()).apply(self._parse_cell)
+    #     return self.mlb_.transform(col)
 
     def fit(self, X, y=None):
-        col = pd.Series(X.ravel()).apply(self._parse_cell)
+        if isinstance(X, pd.DataFrame):
+            X = X.iloc[:, 0]
+        col = X.apply(self._parse_cell)
         self.mlb_.fit(col)
         return self
 
     def transform(self, X):
-        col = pd.Series(X.ravel()).apply(self._parse_cell)
+        if isinstance(X, pd.DataFrame):
+            X = X.iloc[:, 0]
+        col = X.apply(self._parse_cell)
         return self.mlb_.transform(col)
 
     def get_feature_names_out(self, input_features=None):

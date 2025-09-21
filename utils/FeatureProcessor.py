@@ -46,12 +46,3 @@ class FeatureProcessor:
         )
 
         return preprocess
-    
-    def fit(self, X, y=None):
-        return self.preprocess.fit(X, y)
-
-    def transform(self, X):
-        return self.preprocess.transform(X)
-
-    def fit_transform(self, X, y=None):
-        return self.preprocess.fit_transform(X, y)
