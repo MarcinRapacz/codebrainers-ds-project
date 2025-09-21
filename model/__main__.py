@@ -34,13 +34,15 @@ taskCollection = TaskCollection()
 data_provider = DataProvider(DATA_PATH)
 df = data_provider.get_data()
 
-taskCollection.runTask1(df)
+# taskCollection.runTask1(df)
 
-taskCollection.runTask2(df)
+# taskCollection.runTask2(df)
 
-taskCollection.runTask3(df)
+# taskCollection.runTask3(df)
 
-taskCollection.runTask4(df)
+# taskCollection.runTask4(df)
+
+taskCollection.runAllTasks(df)
 
 
 print("Wyniki znajduja sie w katalogu out")

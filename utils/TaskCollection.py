@@ -1,7 +1,10 @@
 import os
 import matplotlib.pyplot as plt
 import seaborn as sns
-import pandas as pd
+import json
+
+from utils.FeatureInspector import FeatureInspector
+
 
 class TaskCollection:
     def __init__(self, output_dir="out"):
@@ -97,3 +100,28 @@ class TaskCollection:
         plt.tight_layout()
         plt.savefig(os.path.join(self.output_dir, "correlation_heatmap.png"))
         plt.close()
+
+    def runTask5(self, df):
+        print("---Skip zadanie 5---")
+        # Zgodnie z instrukcją, zadanie 5 nie jest wymagane do implementacji.
+
+    def runTask6(self, df):
+        print("---Wykonuje zadanie 6---")
+        feature_inspector = FeatureInspector(df, list_cols=["Recycling", "Cooking_With"])
+        output_file = os.path.join(self.output_dir, "task6.md")
+
+        with open(output_file, "w", encoding="utf-8") as f:
+            f.write("# Task 6 Report\n\n")
+            f.write("## Rodzaje kolumn\n")
+            f.write("```\n")
+            f.write(json.dumps(feature_inspector.inspect(), indent=2, ensure_ascii=False))
+            f.write("\n```\n\n")
+
+
+    def runAllTasks(self, df):
+        self.runTask1(df)
+        self.runTask2(df)
+        self.runTask3(df)
+        self.runTask4(df)
+        self.runTask5(df)
+        self.runTask6(df)
