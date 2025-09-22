@@ -1,18 +1,18 @@
 # Task 8 Report
 
 ```
-X:         Body Type     Sex         Diet  ... Energy efficiency                               Recycling                                 Cooking_With
-0      overweight  female  pescatarian  ...                No                               ['Metal']                            ['Stove', 'Oven']
-1           obese  female   vegetarian  ...                No                               ['Metal']                       ['Stove', 'Microwave']
-2      overweight    male     omnivore  ...         Sometimes                               ['Metal']                        ['Oven', 'Microwave']
-3      overweight    male     omnivore  ...         Sometimes  ['Paper', 'Plastic', 'Glass', 'Metal']           ['Microwave', 'Grill', 'Airfryer']
-4           obese  female   vegetarian  ...               Yes                               ['Paper']                                     ['Oven']
-...           ...     ...          ...  ...               ...                                     ...                                          ...
-9995        obese    male     omnivore  ...               Yes                                      []                                ['Microwave']
-9996       normal  female        vegan  ...         Sometimes                    ['Paper', 'Plastic']                       ['Stove', 'Microwave']
-9997   overweight  female   vegetarian  ...               Yes           ['Paper', 'Plastic', 'Metal']           ['Microwave', 'Grill', 'Airfryer']
-9998  underweight    male        vegan  ...         Sometimes                      ['Paper', 'Metal']  ['Stove', 'Microwave', 'Grill', 'Airfryer']
-9999        obese    male  pescatarian  ...         Sometimes           ['Plastic', 'Glass', 'Metal']                ['Oven', 'Grill', 'Airfryer']
+X:         Body Type     Sex         Diet How Often Shower  ... How Long Internet Daily Hour Energy efficiency                               Recycling                                 Cooking_With
+0      overweight  female  pescatarian            daily  ...                            1                No                               ['Metal']                            ['Stove', 'Oven']
+1           obese  female   vegetarian  less frequently  ...                            5                No                               ['Metal']                       ['Stove', 'Microwave']
+2      overweight    male     omnivore  more frequently  ...                            6         Sometimes                               ['Metal']                        ['Oven', 'Microwave']
+3      overweight    male     omnivore      twice a day  ...                            7         Sometimes  ['Paper', 'Plastic', 'Glass', 'Metal']           ['Microwave', 'Grill', 'Airfryer']
+4           obese  female   vegetarian            daily  ...                            6               Yes                               ['Paper']                                     ['Oven']
+...           ...     ...          ...              ...  ...                          ...               ...                                     ...                                          ...
+9995        obese    male     omnivore      twice a day  ...                            9               Yes                                      []                                ['Microwave']
+9996       normal  female        vegan      twice a day  ...                           24         Sometimes                    ['Paper', 'Plastic']                       ['Stove', 'Microwave']
+9997   overweight  female   vegetarian            daily  ...                           24               Yes           ['Paper', 'Plastic', 'Metal']           ['Microwave', 'Grill', 'Airfryer']
+9998  underweight    male        vegan  more frequently  ...                            5         Sometimes                      ['Paper', 'Metal']  ['Stove', 'Microwave', 'Grill', 'Airfryer']
+9999        obese    male  pescatarian      twice a day  ...                            0         Sometimes           ['Plastic', 'Glass', 'Metal']                ['Oven', 'Grill', 'Airfryer']
 
 [10000 rows x 19 columns]
 y_reg: 0       2238

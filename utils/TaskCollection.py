@@ -6,10 +6,12 @@ import json
 
 from utils.FeatureInspector import FeatureInspector
 from utils.FeatureProcessor import FeatureProcessor
+from utils.evaluate_reg import evaluate_reg
 from sklearn.model_selection import train_test_split, GridSearchCV, cross_val_score
 from sklearn.pipeline import Pipeline
 from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 from sklearn.linear_model import LogisticRegression, LinearRegression
+from utils.evaluate_clf import evaluate_clf
 
 
 class TaskCollection:
@@ -183,6 +185,7 @@ class TaskCollection:
         )
 
         gs_knn.fit(X_train, y_train)
+        evaluate_clf(gs_knn.best_estimator_, "task9 - KNN (best)", X_test, y_test, self.output_dir)
 
 
         pipe_lr = Pipeline([
@@ -205,15 +208,27 @@ class TaskCollection:
         )
 
         gs_lr.fit(X_train, y_train)
+        evaluate_clf(gs_lr.best_estimator_, "task9 - LogisticRegression (best)", X_test, y_test, self.output_dir)
 
-        output_file = os.path.join(self.output_dir, "task9.md")
+    # def runTask10(self, df: pd.DataFrame, preprocess: FeatureProcessor):
+    #     print("---Wykonuje zadanie 10---")
+    #     y = df['CarbonEmission'].copy()
+    #     X = df.drop(columns=['CarbonEmission'])
 
-        with open(output_file, "w", encoding="utf-8") as f:
-            f.write("# Task 9 Report\n\n")
-            f.write("```\n")
-            f.write(f"KNN best params: {gs_knn.best_params_}, best score: {gs_knn.best_score_}\n")
-            f.write(f"LR best params: {gs_lr.best_params_}, best score: {gs_lr.best_score_}\n")
-            f.write("```\n\n")
+    #     X_train, X_test, y_train, y_test = #TODO: podziel dane na zbiór treningowy i testowy (np. test_size=0.2, random_state=42)
+
+    #     pipe_knnr = None #TODO: stwórz pipeline z preprocess i KNeighborsRegressor
+    #     param_knnr = None #TODO: zdefiniuj parametry do strojenia
+    #     gs_knnr = None #TODO: uzupełnij GridSearchCV z pipe_knnr i param_knnr
+    #     gs_knnr.fit(X_train, y_train)
+
+    #     pipe_lin = Pipeline([('prep', preprocess), ('reg', LinearRegression())])
+    #     pipe_lin.fit(X_train, y_train)
+
+        
+
+    #     evaluate_reg(gs_knnr.best_estimator_, "KNNRegressor (best)", X_test, y_test)
+    #     evaluate_reg(pipe_lin, "LinearRegression", X_test, y_test)
 
 
     def runAllTasks(self, df: pd.DataFrame):
@@ -226,3 +241,4 @@ class TaskCollection:
         feature_processor = self.runTask7(columns)
         X, y_reg, y_clf, thr = self.runTask8(df)
         self.runTask9(feature_processor, X, y_reg, y_clf, thr)
+        # self.runTask10(df, feature_processor)
