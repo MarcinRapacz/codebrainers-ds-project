@@ -12,6 +12,9 @@ from sklearn.pipeline import Pipeline
 from sklearn.neighbors import KNeighborsClassifier, KNeighborsRegressor
 from sklearn.linear_model import LogisticRegression, LinearRegression
 from utils.evaluate_clf import evaluate_clf
+from sklearn.preprocessing import StandardScaler
+from sklearn.cluster import KMeans
+from sklearn.metrics import silhouette_score
 
 
 class TaskCollection:
@@ -270,6 +273,59 @@ class TaskCollection:
         evaluate_reg(gs_knnr.best_estimator_, "task10 - KNNRegressor (best)", X_test, y_test, self.output_dir)
         evaluate_reg(pipe_lin, "task10 - LinearRegression", X_test, y_test, self.output_dir)
 
+    def runTask11(self, df: pd.DataFrame, processor: FeatureProcessor):
+        print("---Wykonuje zadanie 11---")
+        X = df.drop(columns=['CarbonEmission'])
+
+        pre_kmeans = Pipeline([
+            ('preprocess', processor.preprocess),
+            ('scaler', StandardScaler())
+        ])
+
+        X_processed = pre_kmeans.fit_transform(X)
+
+        range_n_clusters = range(2, 11)
+        inertia_values = []
+        silhouette_scores = []
+
+        output_file = os.path.join(self.output_dir, "task11.md")
+
+        with open(output_file, "a", encoding="utf-8") as f:
+            f.write("# Task 11 Report\n\n")
+
+            for n_clusters in range_n_clusters:
+                kmeans = KMeans(n_clusters=n_clusters, random_state=10, n_init=10)
+                cluster_labels = kmeans.fit_predict(X_processed )
+                
+                inertia_values.append(kmeans.inertia_)
+                silhouette_avg = silhouette_score(X_processed , cluster_labels)
+                silhouette_scores.append(silhouette_avg)
+
+                f.write(f"Dla n_clusters = {n_clusters}, średni silhouette_score wynosi: {silhouette_avg:.4f}")
+                f.write(f"  Inertia: {kmeans.inertia_:.4f}\n")
+                f.write('\n')
+
+        fig, (ax1, ax2) = plt.subplots(1, 2, figsize=(14, 6))
+
+        # Wykres metody łokcia
+        ax1.plot(range_n_clusters, inertia_values, marker='o')
+        ax1.set_xlabel("Liczba klastrów (k)")
+        ax1.set_ylabel("Inercja")
+        ax1.set_title("Metoda łokcia - Wykres Inercji")
+        ax1.axvline(x=4, linestyle='--', color='red', label='k = 4')
+        ax1.legend()
+
+        # Wykres średniego silhouette
+        ax2.plot(range_n_clusters, silhouette_scores, marker='o', color='green')
+        ax2.set_xlabel("Liczba klastrów (k)")
+        ax2.set_ylabel("Średni współczynnik silhouette")
+        ax2.set_title("Wykres Średniego Współczynnika Silhouette")
+        ax2.axvline(x=4, linestyle='--', color='red', label='k = 4')
+        ax2.legend()
+
+        plt.tight_layout()
+        plt.savefig(os.path.join(self.output_dir, "metoda-lokcia.png"))
+        plt.close()
 
     def runAllTasks(self, df: pd.DataFrame):
         self.runTask1(df)
@@ -282,3 +338,4 @@ class TaskCollection:
         X, y_reg, y_clf, thr = self.runTask8(df)
         self.runTask9(feature_processor, X, y_reg, y_clf, thr)
         self.runTask10(df, feature_processor)
+        self.runTask11(df, feature_processor)
